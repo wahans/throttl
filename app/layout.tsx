@@ -15,8 +15,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: 'API Tracker - Monitor Your API Usage',
-  description: 'Track and manage your API keys with usage quotas',
+  title: 'Throttl - API usage tracking made simple',
+  description: 'Generate API keys, set usage quotas, and monitor consumption in real-time. The simplest way to add rate limiting to your API.',
 };
 
 export default function RootLayout({

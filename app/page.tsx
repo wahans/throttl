@@ -12,7 +12,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <span className="brand text-white">API Tracker</span>
+            <span className="brand text-white">Throttl</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/auth/login" className="text-sm text-zinc-400 hover:text-white transition-colors">
@@ -69,7 +69,7 @@ export default function Home() {
               <code>
                 <span className="text-zinc-500">$</span>{' '}
                 <span className="text-emerald-400">curl</span>{' '}
-                <span className="text-zinc-300">-X POST https://api.tracker.dev/v1/track \</span>
+                <span className="text-zinc-300">-X POST https://throttl.dev/v1/track \</span>
                 {'\n'}
                 <span className="text-zinc-300">{'  '}-H</span>{' '}
                 <span className="text-amber-400">&quot;X-API-Key: ak_live_xxxxx&quot;</span>
@@ -149,7 +149,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-zinc-800/50">
         <div className="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
-          <span className="text-sm text-zinc-500">API Tracker</span>
+          <span className="text-sm text-zinc-500">Throttl</span>
           <span className="text-sm text-zinc-600">made by pressing buttons 🤖</span>
         </div>
       </footer>

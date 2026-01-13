@@ -1,7 +1,7 @@
 {
-  "name": "api-tracker",
+  "name": "throttl",
   "version": "1.0.0",
-  "description": "API Usage Tracker Micro-SaaS",
+  "description": "API usage tracking made simple.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

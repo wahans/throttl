@@ -22,7 +22,7 @@ export default function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <span className="brand text-white">API Tracker</span>
+              <span className="brand text-white">Throttl</span>
             </Link>
 
             <div className="flex items-center gap-1">

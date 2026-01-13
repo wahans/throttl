@@ -44,7 +44,7 @@ export default function SignupPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <span className="brand text-white text-lg">API Tracker</span>
+            <span className="brand text-white text-lg">Throttl</span>
           </Link>
         </div>
 
