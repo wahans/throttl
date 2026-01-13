@@ -3,22 +3,31 @@
 import { useEffect, useState } from 'react';
 import KeyCard from '@/components/KeyCard';
 
+interface Plan {
+  id: string;
+  name: string;
+  monthlyQuota: number;
+  rateLimit: number;
+}
+
 interface ApiKey {
   id: string;
   name: string;
-  key_prefix: string;
-  monthly_limit: number;
+  planId: string;
+  planName: string;
+  monthlyLimit: number;
   currentUsage: number;
-  is_active: number;
-  created_at: string;
+  isActive: boolean;
+  createdAt: string;
 }
 
 export default function KeysPage() {
   const [keys, setKeys] = useState<ApiKey[]>([]);
+  const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
-  const [newKeyLimit, setNewKeyLimit] = useState(1000);
+  const [selectedPlanId, setSelectedPlanId] = useState('');
   const [createdKey, setCreatedKey] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
 
@@ -26,15 +35,36 @@ export default function KeysPage() {
     fetch('/api/keys').then((res) => res.json()).then((data) => { setKeys(data.keys || []); setLoading(false); });
   };
 
-  useEffect(() => { fetchKeys(); }, []);
+  const fetchPlans = () => {
+    fetch('/api/plans').then((res) => res.json()).then((data) => {
+      const plansData = data.plans || [];
+      setPlans(plansData);
+      if (plansData.length > 0 && !selectedPlanId) {
+        setSelectedPlanId(plansData[0].id);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchKeys();
+    fetchPlans();
+  }, []);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setCreating(true);
-    const res = await fetch('/api/keys', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: newKeyName, monthlyLimit: newKeyLimit }) });
+    const res = await fetch('/api/keys', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: newKeyName, planId: selectedPlanId }),
+    });
     const data = await res.json();
     setCreating(false);
-    if (data.key) { setCreatedKey(data.key); setNewKeyName(''); setNewKeyLimit(1000); fetchKeys(); }
+    if (data.key) {
+      setCreatedKey(data.key);
+      setNewKeyName('');
+      fetchKeys();
+    }
   };
 
   const handleRevoke = async (id: string) => {
@@ -42,6 +72,8 @@ export default function KeysPage() {
     await fetch(`/api/keys/${id}`, { method: 'DELETE' });
     fetchKeys();
   };
+
+  const selectedPlan = plans.find((p) => p.id === selectedPlanId);
 
   if (loading) {
     return (
@@ -111,9 +143,24 @@ export default function KeysPage() {
                     <input type="text" value={newKeyName} onChange={(e) => setNewKeyName(e.target.value)} placeholder="e.g., Production" className="input w-full" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-zinc-300 mb-2">Monthly limit</label>
-                    <input type="number" value={newKeyLimit} onChange={(e) => setNewKeyLimit(parseInt(e.target.value))} min={1} className="input w-full" required />
-                    <p className="text-xs text-zinc-500 mt-1">Maximum requests per month</p>
+                    <label className="block text-sm font-medium text-zinc-300 mb-2">Plan</label>
+                    <select
+                      value={selectedPlanId}
+                      onChange={(e) => setSelectedPlanId(e.target.value)}
+                      className="input w-full"
+                      required
+                    >
+                      {plans.map((plan) => (
+                        <option key={plan.id} value={plan.id}>
+                          {plan.name.charAt(0).toUpperCase() + plan.name.slice(1)} — {plan.monthlyQuota.toLocaleString()} requests/month
+                        </option>
+                      ))}
+                    </select>
+                    {selectedPlan && (
+                      <p className="text-xs text-zinc-500 mt-1">
+                        Rate limit: {selectedPlan.rateLimit} requests/min
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -146,7 +193,17 @@ export default function KeysPage() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {keys.map((key) => (
-            <KeyCard key={key.id} id={key.id} name={key.name} keyPrefix={key.key_prefix} monthlyLimit={key.monthly_limit} currentUsage={key.currentUsage} isActive={key.is_active === 1} createdAt={key.created_at} onRevoke={handleRevoke} />
+            <KeyCard
+              key={key.id}
+              id={key.id}
+              name={key.name}
+              keyPrefix={key.planName}
+              monthlyLimit={key.monthlyLimit}
+              currentUsage={key.currentUsage}
+              isActive={key.isActive}
+              createdAt={key.createdAt}
+              onRevoke={handleRevoke}
+            />
           ))}
         </div>
       )}
