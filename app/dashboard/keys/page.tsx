@@ -43,44 +43,85 @@ export default function KeysPage() {
     fetchKeys();
   };
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="text-gray-500">Loading...</div></div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="flex items-center gap-2 text-zinc-500">
+          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          Loading...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">API Keys</h1>
-        <button onClick={() => setShowCreate(true)} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Create New Key</button>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-semibold text-white">API Keys</h1>
+          <p className="text-sm text-zinc-400 mt-1">Create and manage your API keys</p>
+        </div>
+        <button onClick={() => setShowCreate(true)} className="btn-primary">
+          <span className="flex items-center gap-2">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create key
+          </span>
+        </button>
       </div>
 
+      {/* Modal */}
       {showCreate && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="card w-full max-w-md p-6">
             {createdKey ? (
               <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Key Created!</h2>
-                <p className="text-sm text-gray-600 mb-4">Copy this key now. It will not be shown again.</p>
-                <div className="bg-gray-100 p-4 rounded-lg mb-4"><code className="text-sm break-all">{createdKey}</code></div>
-                <div className="flex gap-2">
-                  <button onClick={() => navigator.clipboard.writeText(createdKey)} className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Copy</button>
-                  <button onClick={() => { setCreatedKey(null); setShowCreate(false); }} className="flex-1 border border-gray-300 py-2 rounded-lg hover:bg-gray-50">Done</button>
+                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h2 className="text-lg font-semibold text-white text-center mb-2">Key created</h2>
+                <p className="text-sm text-zinc-400 text-center mb-4">Copy this key now. It won&apos;t be shown again.</p>
+                <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 mb-4">
+                  <code className="text-sm text-emerald-400 mono break-all">{createdKey}</code>
+                </div>
+                <div className="flex gap-3">
+                  <button onClick={() => navigator.clipboard.writeText(createdKey)} className="btn-primary flex-1">
+                    Copy to clipboard
+                  </button>
+                  <button onClick={() => { setCreatedKey(null); setShowCreate(false); }} className="btn-secondary flex-1">
+                    Done
+                  </button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleCreate}>
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Create API Key</h2>
+                <h2 className="text-lg font-semibold text-white mb-1">Create API key</h2>
+                <p className="text-sm text-zinc-400 mb-6">Generate a new key to access the API</p>
+
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Key Name</label>
-                    <input type="text" value={newKeyName} onChange={(e) => setNewKeyName(e.target.value)} placeholder="e.g., Production API" className="w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+                    <label className="block text-sm font-medium text-zinc-300 mb-2">Name</label>
+                    <input type="text" value={newKeyName} onChange={(e) => setNewKeyName(e.target.value)} placeholder="e.g., Production" className="input w-full" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Limit</label>
-                    <input type="number" value={newKeyLimit} onChange={(e) => setNewKeyLimit(parseInt(e.target.value))} min={1} className="w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+                    <label className="block text-sm font-medium text-zinc-300 mb-2">Monthly limit</label>
+                    <input type="number" value={newKeyLimit} onChange={(e) => setNewKeyLimit(parseInt(e.target.value))} min={1} className="input w-full" required />
+                    <p className="text-xs text-zinc-500 mt-1">Maximum requests per month</p>
                   </div>
                 </div>
-                <div className="flex gap-2 mt-6">
-                  <button type="button" onClick={() => setShowCreate(false)} className="flex-1 border border-gray-300 py-2 rounded-lg hover:bg-gray-50">Cancel</button>
-                  <button type="submit" disabled={creating} className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50">{creating ? 'Creating...' : 'Create Key'}</button>
+
+                <div className="flex gap-3 mt-6">
+                  <button type="button" onClick={() => setShowCreate(false)} className="btn-secondary flex-1">Cancel</button>
+                  <button type="submit" disabled={creating} className="btn-primary flex-1 disabled:opacity-50">
+                    {creating ? 'Creating...' : 'Create key'}
+                  </button>
                 </div>
               </form>
             )}
@@ -88,13 +129,22 @@ export default function KeysPage() {
         </div>
       )}
 
+      {/* Keys Grid */}
       {keys.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-xl">
-          <p className="text-gray-500 mb-4">No API keys yet</p>
-          <button onClick={() => setShowCreate(true)} className="text-blue-600 hover:underline">Create your first key</button>
+        <div className="card p-12 text-center">
+          <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+          </div>
+          <h3 className="text-white font-medium mb-1">No API keys yet</h3>
+          <p className="text-sm text-zinc-400 mb-4">Create your first key to get started</p>
+          <button onClick={() => setShowCreate(true)} className="btn-primary">
+            Create your first key
+          </button>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {keys.map((key) => (
             <KeyCard key={key.id} id={key.id} name={key.name} keyPrefix={key.key_prefix} monthlyLimit={key.monthly_limit} currentUsage={key.currentUsage} isActive={key.is_active === 1} createdAt={key.created_at} onRevoke={handleRevoke} />
           ))}
