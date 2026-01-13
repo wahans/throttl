@@ -19,6 +19,22 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
+// Landing page
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'Throttl',
+    description: 'API usage tracking made simple',
+    endpoints: {
+      plans: 'GET /api/plans',
+      createKey: 'POST /api/keys',
+      getKey: 'GET /api/keys/:id',
+      validate: 'POST /api/validate',
+      revokeKey: 'DELETE /api/keys/:id',
+    },
+    docs: 'https://github.com/wahans/throttl',
+  });
+});
+
 async function start() {
   await seedDefaultPlans();
 
