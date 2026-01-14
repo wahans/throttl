@@ -5,12 +5,13 @@ import type { ApiKey } from '../types.js';
 const KEY_PREFIX = 'key:';
 const SECRET_INDEX = 'secret:';
 const KEYS_SET = 'keys:all';
+const OWNER_INDEX = 'owner:';
 
 function generateSecret(): string {
   return `tk_${nanoid(32)}`;
 }
 
-export async function createKey(name: string, planId: string): Promise<ApiKey> {
+export async function createKey(name: string, planId: string, ownerId: string): Promise<ApiKey> {
   const id = nanoid(12);
   const secret = generateSecret();
 
@@ -19,6 +20,7 @@ export async function createKey(name: string, planId: string): Promise<ApiKey> {
     secret,
     name,
     planId,
+    ownerId,
     createdAt: Date.now(),
     active: true,
   };
@@ -28,6 +30,7 @@ export async function createKey(name: string, planId: string): Promise<ApiKey> {
     .hset(`${KEY_PREFIX}${id}`, key as unknown as Record<string, string>)
     .set(`${SECRET_INDEX}${secret}`, id)
     .sadd(KEYS_SET, id)
+    .sadd(`${OWNER_INDEX}${ownerId}`, id)
     .exec();
 
   return key;
@@ -52,6 +55,21 @@ export async function getKeyBySecret(secret: string): Promise<ApiKey | null> {
 
 export async function listKeys(): Promise<Omit<ApiKey, 'secret'>[]> {
   const ids = await redis.smembers(KEYS_SET);
+  const keys: Omit<ApiKey, 'secret'>[] = [];
+
+  for (const id of ids) {
+    const key = await getKeyById(id);
+    if (key) {
+      const { secret, ...rest } = key;
+      keys.push(rest);
+    }
+  }
+
+  return keys;
+}
+
+export async function listKeysByOwner(ownerId: string): Promise<Omit<ApiKey, 'secret'>[]> {
+  const ids = await redis.smembers(`${OWNER_INDEX}${ownerId}`);
   const keys: Omit<ApiKey, 'secret'>[] = [];
 
   for (const id of ids) {

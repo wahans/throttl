@@ -7,8 +7,10 @@ export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+  const userId = (session.user as { id?: string }).id || session.user.email || '';
+
   try {
-    const keys = await getAllKeysWithUsage();
+    const keys = await getAllKeysWithUsage(userId);
     const plans = await listPlans();
 
     const keysWithPlanInfo = keys.map((key) => {
@@ -36,13 +38,15 @@ export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+  const userId = (session.user as { id?: string }).id || session.user.email || '';
+
   try {
     const { name, planId } = await request.json();
 
     if (!name) return NextResponse.json({ error: 'Name is required' }, { status: 400 });
     if (!planId) return NextResponse.json({ error: 'Plan is required' }, { status: 400 });
 
-    const result = await createKey(name, planId);
+    const result = await createKey(name, planId, userId);
     const plans = await listPlans();
     const plan = plans.find((p) => p.id === planId);
 

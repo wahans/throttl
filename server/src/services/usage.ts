@@ -35,8 +35,20 @@ export async function validateAndIncrement(secret: string): Promise<ValidationRe
     return { valid: false, error: 'quota_exceeded', remaining: 0 };
   }
 
+  const remaining = plan.monthlyQuota - currentUsage;
+  const percentUsed = (currentUsage / plan.monthlyQuota) * 100;
+
+  // Alert at 90% threshold
+  if (percentUsed >= 90) {
+    return {
+      valid: true,
+      remaining,
+      alert: 'quota_90_percent',
+    };
+  }
+
   return {
     valid: true,
-    remaining: plan.monthlyQuota - currentUsage,
+    remaining,
   };
 }

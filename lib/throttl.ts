@@ -34,8 +34,11 @@ export async function listPlans(): Promise<Plan[]> {
   return res.json();
 }
 
-export async function listKeys(): Promise<Omit<ApiKey, 'usage'>[]> {
-  const res = await fetch(`${API_URL}/api/keys`);
+export async function listKeys(ownerId?: string): Promise<Omit<ApiKey, 'usage'>[]> {
+  const url = ownerId
+    ? `${API_URL}/api/keys?ownerId=${encodeURIComponent(ownerId)}`
+    : `${API_URL}/api/keys`;
+  const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch keys');
   return res.json();
 }
@@ -46,11 +49,11 @@ export async function getKey(id: string): Promise<ApiKey> {
   return res.json();
 }
 
-export async function createKey(name: string, planId: string): Promise<CreateKeyResponse> {
+export async function createKey(name: string, planId: string, ownerId: string): Promise<CreateKeyResponse> {
   const res = await fetch(`${API_URL}/api/keys`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, planId }),
+    body: JSON.stringify({ name, planId, ownerId }),
   });
   if (!res.ok) throw new Error('Failed to create key');
   return res.json();
@@ -69,8 +72,8 @@ export async function getKeyWithUsage(id: string): Promise<ApiKey> {
   return res.json();
 }
 
-export async function getAllKeysWithUsage(): Promise<ApiKey[]> {
-  const keys = await listKeys();
+export async function getAllKeysWithUsage(ownerId?: string): Promise<ApiKey[]> {
+  const keys = await listKeys(ownerId);
   const keysWithUsage = await Promise.all(
     keys.map(async (key) => {
       try {
@@ -81,4 +84,24 @@ export async function getAllKeysWithUsage(): Promise<ApiKey[]> {
     })
   );
   return keysWithUsage;
+}
+
+export interface UsageExport {
+  keyId: string;
+  keyName: string;
+  planName: string;
+  currentUsage: number;
+  monthlyQuota: number;
+  percentUsed: number;
+}
+
+export async function exportUsage(ownerId: string, format: 'json' | 'csv' = 'json'): Promise<UsageExport[] | string> {
+  const url = `${API_URL}/api/keys/export/usage?ownerId=${encodeURIComponent(ownerId)}&format=${format}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to export usage');
+
+  if (format === 'csv') {
+    return res.text();
+  }
+  return res.json();
 }
