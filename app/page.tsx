@@ -14,7 +14,16 @@ export default function Home() {
             </div>
             <span className="brand text-white">Throttl</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
+            <Link href="#features" className="text-sm text-zinc-400 hover:text-white transition-colors">
+              Features
+            </Link>
+            <Link href="#pricing" className="text-sm text-zinc-400 hover:text-white transition-colors">
+              Pricing
+            </Link>
+            <Link href="/docs" className="text-sm text-zinc-400 hover:text-white transition-colors">
+              Docs
+            </Link>
             <Link href="/auth/login" className="text-sm text-zinc-400 hover:text-white transition-colors">
               Sign in
             </Link>
@@ -69,7 +78,7 @@ export default function Home() {
               <code>
                 <span className="text-zinc-500">$</span>{' '}
                 <span className="text-emerald-400">curl</span>{' '}
-                <span className="text-zinc-300">-X POST https://throttl.dev/v1/track \</span>
+                <span className="text-zinc-300">-X POST https://api.throttl.xyz/api/validate \</span>
                 {'\n'}
                 <span className="text-zinc-300">{'  '}-H</span>{' '}
                 <span className="text-amber-400">&quot;X-API-Key: ak_live_xxxxx&quot;</span>
@@ -144,13 +153,194 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Pricing */}
+        <div id="pricing" className="pb-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-white mb-4">Simple pricing</h2>
+            <p className="text-zinc-400">Start free, scale as you grow</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Free */}
+            <div className="card p-6">
+              <div className="mb-4">
+                <h3 className="font-semibold text-white text-lg">Free</h3>
+                <p className="text-sm text-zinc-500">For side projects</p>
+              </div>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-white">$0</span>
+                <span className="text-zinc-500">/month</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  1,000 requests/month
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  1 API key
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Usage dashboard
+                </li>
+              </ul>
+              <Link href="/auth/signup" className="btn-secondary w-full text-center block">
+                Get started
+              </Link>
+            </div>
+
+            {/* Pro */}
+            <div className="card p-6 border-blue-500/50 relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 text-xs font-medium text-white rounded-full">
+                Popular
+              </div>
+              <div className="mb-4">
+                <h3 className="font-semibold text-white text-lg">Pro</h3>
+                <p className="text-sm text-zinc-500">For growing apps</p>
+              </div>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-white">$29</span>
+                <span className="text-zinc-500">/month</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  50,000 requests/month
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Unlimited API keys
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Webhook notifications
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Usage export (CSV)
+                </li>
+              </ul>
+              <Link href="/auth/signup" className="btn-primary w-full text-center block">
+                Start free trial
+              </Link>
+            </div>
+
+            {/* Enterprise */}
+            <div className="card p-6">
+              <div className="mb-4">
+                <h3 className="font-semibold text-white text-lg">Enterprise</h3>
+                <p className="text-sm text-zinc-500">For large scale</p>
+              </div>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-white">$99</span>
+                <span className="text-zinc-500">/month</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  500,000 requests/month
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Everything in Pro
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Priority support
+                </li>
+                <li className="flex items-center gap-2 text-sm text-zinc-300">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Custom integrations
+                </li>
+              </ul>
+              <Link href="/auth/signup" className="btn-secondary w-full text-center block">
+                Contact us
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="pb-24">
+          <div className="card p-12 text-center bg-gradient-to-b from-blue-500/10 to-transparent border-blue-500/20">
+            <h2 className="text-3xl font-bold text-white mb-4">Ready to ship?</h2>
+            <p className="text-zinc-400 mb-8 max-w-md mx-auto">
+              Add API rate limiting to your app in under 5 minutes. No credit card required.
+            </p>
+            <Link href="/auth/signup" className="btn-primary px-8 py-3 text-base">
+              Start for free
+            </Link>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
       <footer className="border-t border-zinc-800/50">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
-          <span className="text-sm text-zinc-500">Throttl</span>
-          <span className="text-sm text-zinc-600">made by pressing buttons 🤖</span>
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <span className="brand text-white">Throttl</span>
+              </div>
+              <p className="text-sm text-zinc-500">API usage tracking made simple.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-white mb-4">Product</h4>
+              <ul className="space-y-2">
+                <li><Link href="#features" className="text-sm text-zinc-500 hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="#pricing" className="text-sm text-zinc-500 hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/docs" className="text-sm text-zinc-500 hover:text-white transition-colors">Documentation</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-white mb-4">Resources</h4>
+              <ul className="space-y-2">
+                <li><Link href="/docs#quickstart" className="text-sm text-zinc-500 hover:text-white transition-colors">Quickstart</Link></li>
+                <li><Link href="/docs#api" className="text-sm text-zinc-500 hover:text-white transition-colors">API Reference</Link></li>
+                <li><a href="https://github.com/wahans/throttl" className="text-sm text-zinc-500 hover:text-white transition-colors">GitHub</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-white mb-4">Company</h4>
+              <ul className="space-y-2">
+                <li><a href="https://twitter.com" className="text-sm text-zinc-500 hover:text-white transition-colors">Twitter</a></li>
+                <li><a href="mailto:hello@throttl.xyz" className="text-sm text-zinc-500 hover:text-white transition-colors">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-8 border-t border-zinc-800/50 flex items-center justify-between">
+            <span className="text-sm text-zinc-600">&copy; 2026 Throttl. All rights reserved.</span>
+            <span className="text-sm text-zinc-600">made by pressing buttons</span>
+          </div>
         </div>
       </footer>
     </div>
