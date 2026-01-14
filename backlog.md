@@ -37,13 +37,14 @@ Entry format:
 - [x] **Key management UI** | Priority: med | Added: 2026-01-13 | Notes: create/revoke with plan selector
 
 ### Alerts & Notifications
-- [ ] **Quota threshold alerts** | Priority: med | Added: 2026-01-13 | Notes: email/webhook at 80%, 90%, 100%
+- [x] **90% quota threshold alert** | Priority: med | Added: 2026-01-13 | Notes: returned in validation response
+- [ ] **Email/webhook notifications** | Priority: low | Added: 2026-01-13 | Notes: push alerts when thresholds hit
 - [ ] **Anomaly detection** | Priority: low | Added: 2026-01-13 | Notes: flag unusual spikes in usage
 
 ### Advanced Features
 - [ ] **Per-endpoint rate limits** | Priority: low | Added: 2026-01-13 | Notes: different limits for different routes
-- [ ] **Usage export** | Priority: low | Added: 2026-01-13 | Notes: CSV/JSON export for billing integration
-- [ ] **Multi-tenant support** | Priority: low | Added: 2026-01-13 | Notes: orgs/teams with shared keys
+- [x] **Usage export** | Priority: low | Added: 2026-01-13 | Notes: CSV/JSON export at /api/keys/export/usage
+- [x] **Multi-tenant support** | Priority: med | Added: 2026-01-13 | Notes: per-user key scoping via ownerId
 
 ---
 
