@@ -8,11 +8,13 @@
 
 <!-- Features/items that are live and working -->
 
-**Live URL:** https://server-production-ea3b.up.railway.app
+**API Server:** https://server-production-ea3b.up.railway.app
+**Dashboard:** https://dashboard-production-0c49.up.railway.app
 
 - [x] **Core API** | Plans, Keys, Validation endpoints
 - [x] **Redis storage** | Railway-managed Redis instance
 - [x] **Tiered plans** | free (1k), pro (50k), enterprise (500k)
+- [x] **Dashboard** | Auth, key management, usage overview
 
 ---
 
@@ -30,9 +32,9 @@ Entry format:
 -->
 
 ### Dashboard
-- [ ] **Real-time usage dashboard** | Priority: med | Added: 2026-01-13 | Notes: see all keys and current usage at a glance
-- [ ] **Usage graphs/charts** | Priority: med | Added: 2026-01-13 | Notes: visualize consumption over time
-- [ ] **Key management UI** | Priority: med | Added: 2026-01-13 | Notes: create/revoke/edit keys without API calls
+- [x] **Real-time usage dashboard** | Priority: med | Added: 2026-01-13 | Notes: deployed to Railway
+- [x] **Usage graphs/charts** | Priority: med | Added: 2026-01-13 | Notes: recharts integration
+- [x] **Key management UI** | Priority: med | Added: 2026-01-13 | Notes: create/revoke with plan selector
 
 ### Alerts & Notifications
 - [ ] **Quota threshold alerts** | Priority: med | Added: 2026-01-13 | Notes: email/webhook at 80%, 90%, 100%
