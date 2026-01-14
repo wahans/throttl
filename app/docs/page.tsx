@@ -78,7 +78,7 @@ export default function DocsPage() {
                   <span className="text-xs text-zinc-500 mono">bash</span>
                 </div>
                 <pre className="p-4 text-sm mono overflow-x-auto">
-                  <code className="text-zinc-300">{`curl -X POST https://api.throttl.xyz/api/validate \\
+                  <code className="text-zinc-300">{`curl -X POST https://server-production-ea3b.up.railway.app/api/validate \\
   -H "Content-Type: application/json" \\
   -d '{"key": "tk_your_api_key_here"}'`}</code>
                 </pre>
@@ -230,7 +230,7 @@ export default function DocsPage() {
                   <span className="text-xs text-zinc-500 mono">bash</span>
                 </div>
                 <pre className="p-4 text-sm mono overflow-x-auto">
-                  <code className="text-zinc-300">npm install @throttl/express</code>
+                  <code className="text-zinc-300">npm install throttl-express</code>
                 </pre>
               </div>
             </div>
@@ -243,13 +243,13 @@ export default function DocsPage() {
                 </div>
                 <pre className="p-4 text-sm mono overflow-x-auto">
                   <code className="text-zinc-300">{`import express from 'express';
-import { throttl } from '@throttl/express';
+import { throttl } from 'throttl-express';
 
 const app = express();
 
 // Add Throttl middleware
 app.use(throttl({
-  apiUrl: 'https://api.throttl.xyz'
+  apiUrl: 'https://server-production-ea3b.up.railway.app'
 }));
 
 // Your routes are now protected

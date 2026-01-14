@@ -78,7 +78,7 @@ export default function Home() {
               <code>
                 <span className="text-zinc-500">$</span>{' '}
                 <span className="text-emerald-400">curl</span>{' '}
-                <span className="text-zinc-300">-X POST https://api.throttl.xyz/api/validate \</span>
+                <span className="text-zinc-300">-X POST https://server-production-ea3b.up.railway.app/api/validate \</span>
                 {'\n'}
                 <span className="text-zinc-300">{'  '}-H</span>{' '}
                 <span className="text-amber-400">&quot;X-API-Key: ak_live_xxxxx&quot;</span>
