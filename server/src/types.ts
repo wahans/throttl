@@ -42,3 +42,27 @@ export interface UsageExport {
   monthlyQuota: number;
   percentUsed: number;
 }
+
+export interface Webhook {
+  id: string;
+  ownerId: string;
+  url: string;
+  events: WebhookEvent[];
+  active: boolean;
+  createdAt: number;
+}
+
+export type WebhookEvent = 'quota.90_percent' | 'quota.exceeded';
+
+export interface WebhookPayload {
+  event: WebhookEvent;
+  timestamp: number;
+  data: {
+    keyId: string;
+    keyName: string;
+    planName: string;
+    currentUsage: number;
+    monthlyQuota: number;
+    percentUsed: number;
+  };
+}

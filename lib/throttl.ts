@@ -105,3 +105,38 @@ export async function exportUsage(ownerId: string, format: 'json' | 'csv' = 'jso
   }
   return res.json();
 }
+
+// Webhooks
+export type WebhookEvent = 'quota.90_percent' | 'quota.exceeded';
+
+export interface Webhook {
+  id: string;
+  ownerId: string;
+  url: string;
+  events: WebhookEvent[];
+  active: boolean;
+  createdAt: number;
+}
+
+export async function listWebhooks(ownerId: string): Promise<Webhook[]> {
+  const res = await fetch(`${API_URL}/api/webhooks?ownerId=${encodeURIComponent(ownerId)}`);
+  if (!res.ok) throw new Error('Failed to fetch webhooks');
+  return res.json();
+}
+
+export async function createWebhook(ownerId: string, url: string, events: WebhookEvent[]): Promise<Webhook> {
+  const res = await fetch(`${API_URL}/api/webhooks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ownerId, url, events }),
+  });
+  if (!res.ok) throw new Error('Failed to create webhook');
+  return res.json();
+}
+
+export async function deleteWebhook(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/api/webhooks/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) throw new Error('Failed to delete webhook');
+}

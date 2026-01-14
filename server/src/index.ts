@@ -3,6 +3,7 @@ import { seedDefaultPlans } from './services/plans.js';
 import plansRouter from './routes/plans.js';
 import keysRouter from './routes/keys.js';
 import validateRouter from './routes/validate.js';
+import webhooksRouter from './routes/webhooks.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api/plans', plansRouter);
 app.use('/api/keys', keysRouter);
 app.use('/api/validate', validateRouter);
+app.use('/api/webhooks', webhooksRouter);
 
 // Health check
 app.get('/health', (_req, res) => {
@@ -30,6 +32,7 @@ app.get('/', (_req, res) => {
       getKey: 'GET /api/keys/:id',
       validate: 'POST /api/validate',
       revokeKey: 'DELETE /api/keys/:id',
+      webhooks: 'GET/POST /api/webhooks',
     },
     docs: 'https://github.com/wahans/throttl',
   });

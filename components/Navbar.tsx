@@ -9,6 +9,7 @@ export default function Navbar() {
   const links = [
     { href: '/dashboard', label: 'Overview' },
     { href: '/dashboard/keys', label: 'API Keys' },
+    { href: '/dashboard/webhooks', label: 'Webhooks' },
   ];
 
   return (
