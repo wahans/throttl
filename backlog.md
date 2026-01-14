@@ -38,7 +38,8 @@ Entry format:
 
 ### Alerts & Notifications
 - [x] **90% quota threshold alert** | Priority: med | Added: 2026-01-13 | Notes: returned in validation response
-- [ ] **Email/webhook notifications** | Priority: low | Added: 2026-01-13 | Notes: push alerts when thresholds hit
+- [x] **Webhook notifications** | Priority: low | Added: 2026-01-13 | Notes: POST to user-configured URLs on 90%/100%
+- [ ] **Email notifications** | Priority: low | Added: 2026-01-13 | Notes: optional email alerts
 - [ ] **Anomaly detection** | Priority: low | Added: 2026-01-13 | Notes: flag unusual spikes in usage
 
 ### Advanced Features
